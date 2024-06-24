@@ -122,7 +122,7 @@ public class Controller {
 	        }
 	        JOptionPane.showMessageDialog(null, "Arquivo lido com sucesso!\n" + fileName);
 	    } catch (NumberFormatException e) {
-	    	//lança um erro específico para valor incorreto das datas
+	    	//lança um erro específico para formato ou valor incorreto no arquivo
 	        JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo. Verifique se o formato CSV dele está correto. Erro lançado: " + e.getMessage()); 
 	    }
 
@@ -133,8 +133,7 @@ public class Controller {
 	public void processarBoletos() {
 		reset = false;
 		resetaVars();
-		for(int i=0; i < listaBoletos.size(); i++) {
-			Boleto boleto = listaBoletos.get(i);
+		for(Boleto boleto : listaBoletos) {
 			double valor = boleto.getVlrDocto();
 			boleto.setVlrMulta((valor * txMulta)); //usando o método set para guardar o valor da multa
 			vlrTotalMultas += boleto.getVlrMulta(); //somando o valor total de multas
