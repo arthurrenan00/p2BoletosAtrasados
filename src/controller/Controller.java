@@ -122,7 +122,7 @@ public class Controller {
 	        }
 	        JOptionPane.showMessageDialog(null, "Arquivo lido com sucesso!\n" + fileName);
 	    } catch (NumberFormatException e) {
-	    	//lança um erro específico para formato ou valor incorreto no arquivo
+	    	//lança um erro específico para formato ou valor incorreto no arquivo 
 	        JOptionPane.showMessageDialog(null, "Erro ao ler o arquivo. Verifique se o formato CSV dele está correto. Erro lançado: " + e.getMessage()); 
 	    }
 
