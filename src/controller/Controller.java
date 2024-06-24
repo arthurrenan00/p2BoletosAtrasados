@@ -102,7 +102,7 @@ public class Controller {
 	         * */
 	        for (int i = 1; i < lines.size(); i++) { //mude o valor de i para 1 para ler o BoletosAtrasados.txt sem tirar o cabeçalho
 	        	String line = lines.get(i);
-	            String[] fields = line.split(";");
+	            String[] fields = line.split(";"); //separando cada campo depois da ocorrência da ;
 	            String codigo = fields[0];
 	            String nomePagador = fields[1];
 	            int anoVcto = Integer.parseInt(fields[2]);
@@ -111,7 +111,7 @@ public class Controller {
 	            
 	            Calendar dataVencimento = Calendar.getInstance();
 	            dataVencimento.set(Calendar.YEAR, anoVcto);
-	            dataVencimento.set(Calendar.MONTH, (mesVcto));
+	            dataVencimento.set(Calendar.MONTH, (mesVcto)); //para dar o mês certo, tem que ser (mesVcto-1) vide classe Calendar.MONTH
 	            dataVencimento.set(Calendar.DAY_OF_MONTH, diaVcto);
 
 	            double valor = Double.parseDouble(fields[5]);
@@ -136,28 +136,28 @@ public class Controller {
 		for(int i=0; i < listaBoletos.size(); i++) {
 			Boleto boleto = listaBoletos.get(i);
 			double valor = boleto.getVlrDocto();
-			boleto.setVlrMulta((valor * txMulta));			
-			vlrTotalMultas += boleto.getVlrMulta();
-			int diasAtraso = boleto.getDiasAtraso();
-			somaDias += diasAtraso;
-			if(diasAtraso > maiorAtraso) maiorAtraso = diasAtraso;
-			if(diasAtraso < menorAtraso) menorAtraso = diasAtraso;
-			boleto.setVlrJuros(( valor * txJurosDia * diasAtraso ));
-			vlrTotalJuros += boleto.getVlrJuros();
+			boleto.setVlrMulta((valor * txMulta)); //usando o método set para guardar o valor da multa
+			vlrTotalMultas += boleto.getVlrMulta(); //somando o valor total de multas
+			int diasAtraso = boleto.getDiasAtraso(); //utilizando o método getDiasAtraso() da model Boleto
+			somaDias += diasAtraso; //fazendo a soma de dias atrasados para depois calcular a média
+			if(diasAtraso > maiorAtraso) maiorAtraso = diasAtraso; //verificação para definir qual foi o maior atraso
+			if(diasAtraso < menorAtraso) menorAtraso = diasAtraso; //verificação para definir qual foi o menor atraso
+			boleto.setVlrJuros(( valor * txJurosDia * diasAtraso )); //usando o método set para guardar o valor do juros
+			vlrTotalJuros += boleto.getVlrJuros(); //somando o valor total de juros
 			
 		}
-		mediaAtraso = somaDias / listaBoletos.size();
+		mediaAtraso = somaDias / listaBoletos.size(); //cálculo da média de atraso em dias
 		
 		processado=true;
 	}
 	
 	
 	public void salvarArquivoBoletos(String fileName) throws IOException{
-		StringBuilder sb = new StringBuilder();
-		sb.append("Codigo;NomeDevedor;Vencimento;DiasAtraso;ValorDocto;VlrMulta;VlrJuros").append("\n");
+		StringBuilder sb = new StringBuilder(); //string builder para construir o arquivo de texto
+		sb.append("Codigo;NomeDevedor;Vencimento;DiasAtraso;ValorDocto;VlrMulta;VlrJuros").append("\n"); //cabeçalho e depois pula a linha
 		for(Boleto boleto : listaBoletos) {
-			sb.append(boleto.toString());
-			sb.append("\n");
+			sb.append(boleto.toString()); //chama o método .toString() para construir a linha do boleto
+			sb.append("\n"); //pula linha
 		}
 		
 		try {
@@ -176,7 +176,8 @@ public class Controller {
 		maiorAtraso=0;
 		menorAtraso=10000000;
 		mediaAtraso=0;
-		if(reset) {
+		if(reset) { 
+			//esse if foi implementado para só resetar o valor total dos boletos e limpar a lista de boletos quando o usuário clicar para abrir outro arquivo
 			vlrTotalBoletos=0;
 			listaBoletos.clear();
 		}
