@@ -26,8 +26,8 @@ public class Controller {
 	private int somaDias = 0;
 
 	
-	private final double txMulta= 0.02; //valor em %
-	private final double txJurosMes= 0.012; //valor em %
+	private final double txMulta= 0.02; //2 %
+	private final double txJurosMes= 0.012; //1,2%
 	private double txJurosDia = txJurosMes / 30;
 
 	
@@ -111,7 +111,7 @@ public class Controller {
 	            
 	            Calendar dataVencimento = Calendar.getInstance();
 	            dataVencimento.set(Calendar.YEAR, anoVcto);
-	            dataVencimento.set(Calendar.MONTH, (mesVcto)); //para dar o mês certo, tem que ser (mesVcto-1) vide classe Calendar.MONTH
+	            dataVencimento.set(Calendar.MONTH, (mesVcto-1)); //para dar o mês certo, tem que ser (mesVcto-1) vide classe Calendar.MONTH
 	            dataVencimento.set(Calendar.DAY_OF_MONTH, diaVcto);
 
 	            double valor = Double.parseDouble(fields[5]);
